@@ -49,7 +49,7 @@ public class InstrumentProcessorShould {
     }
 
     @Test
-    public void call_finished_task_when_finished_task_event_is_fired() throws Exception {
+    public void fire_event_when_task_is_finished() throws Exception {
         String task = "taskToExecute";
         given(taskDispacher.getTask()).willReturn(task);
         doThrow(new FinishedTaskEventException()).when(instrument).execute(task);
