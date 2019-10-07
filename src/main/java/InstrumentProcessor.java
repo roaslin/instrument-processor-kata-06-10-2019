@@ -14,6 +14,8 @@ public class InstrumentProcessor {
             instrument.execute(task);
         } catch (FinishedTaskEventException ex) {
             taskDispacher.finishedTask(task);
+        } catch (ErrorEventException ex) {
+            taskDispacher.error(task);
         } catch (Exception ex) {
             throw new Exception(ex);
         }

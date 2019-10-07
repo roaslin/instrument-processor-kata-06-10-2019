@@ -60,4 +60,17 @@ public class InstrumentProcessorShould {
         verify(instrument, times(1)).execute(task);
         verify(taskDispacher, times(1)).finishedTask(task);
     }
+
+    @Test
+    public void fire_event_when_a_task_has_an_error() throws Exception {
+        String task = "taskToExecute";
+        given(taskDispacher.getTask()).willReturn(task);
+        doThrow(new ErrorEventException(task)).when(instrument).execute(task);
+
+        instrumentProcessor.process();
+
+        verify(taskDispacher, times(1)).getTask();
+        verify(instrument, times(1)).execute(task);
+        verify(taskDispacher, times(1)).error(task);
+    }
 }
