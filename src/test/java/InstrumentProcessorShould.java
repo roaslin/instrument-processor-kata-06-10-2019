@@ -16,12 +16,14 @@ public class InstrumentProcessorShould {
     private TaskDispacher taskDispacher;
     @Mock
     private Intrument instrument;
+    @Mock
+    private Console console;
 
     private InstrumentProcessor instrumentProcessor;
 
     @Before
     public void setUp() {
-        this.instrumentProcessor = new InstrumentProcessor(taskDispacher, instrument);
+        this.instrumentProcessor = new InstrumentProcessor(taskDispacher, instrument, console);
     }
 
     @Test
@@ -62,7 +64,7 @@ public class InstrumentProcessorShould {
     }
 
     @Test
-    public void fire_event_when_a_task_has_an_error() throws Exception {
+    public void prints_task_into_the_console() throws Exception {
         String task = "taskToExecute";
         given(taskDispacher.getTask()).willReturn(task);
         doThrow(new ErrorEventException(task)).when(instrument).execute(task);
@@ -71,6 +73,6 @@ public class InstrumentProcessorShould {
 
         verify(taskDispacher, times(1)).getTask();
         verify(instrument, times(1)).execute(task);
-        verify(taskDispacher, times(1)).error(task);
+        verify(console, times(1)).print(task);
     }
 }
