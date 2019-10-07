@@ -12,9 +12,10 @@ public class InstrumentProcessor {
 
         try {
             instrument.execute(task);
+        } catch (FinishedTaskEventException ex) {
+            taskDispacher.finishedTask(task);
         } catch (Exception ex) {
             throw new Exception(ex);
         }
-        taskDispacher.finishedTask(task);
     }
 }
