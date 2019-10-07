@@ -64,7 +64,7 @@ public class InstrumentProcessorShould {
     }
 
     @Test
-    public void prints_task_into_the_console() throws Exception {
+    public void prints_task_into_the_console_when_theres_an_error() throws Exception {
         String task = "taskToExecute";
         given(taskDispacher.getTask()).willReturn(task);
         doThrow(new ErrorEventException(task)).when(instrument).execute(task);
